@@ -14,15 +14,13 @@ default_args = {
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
-    "retries": 1,
-    "retry_delay": timedelta(minutes=5),
     # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("population", default_args=default_args, )
+dag = DAG("population", default_args=default_args)
 
 
 # Task1: Wait for file to appear in S3 bucket (SensorOperator)
@@ -34,7 +32,7 @@ dag = DAG("population", default_args=default_args, )
 
 t1 = BashOperator(
     task_id="run_manager",
-    bash_command="python3 /srv/etl/pipline-variant/population/manager_lambda/population_manager.py staging ",
+    bash_command="python3 /srv/etl/pipeline-variant/population/manager_lambda/population_manager.py staging ",
     retries=1, 
     dag=dag
     )
