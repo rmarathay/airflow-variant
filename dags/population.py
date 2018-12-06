@@ -37,5 +37,19 @@ t1 = BashOperator(
     dag=dag
     )
 
+t2 = BashOperator(
+    task_id="run_population_companies",
+    bash_operator="python3 /srv/etl/pipeline-variant/population/companies_lambda/population_companies.py staging",
+    retries=1,
+    dag=dag
+    )
 
+t3 = BashOperator(
+    task_id="run_population_commands",
+    bash_operator="python3 /srv/etl/pipeline-variant/population/commands_lambda/population_commands.py staging",
+    retries=1,
+    dag=dag
+    )
+
+t1.set_upstream(t2).set_upstream(t3)
 
