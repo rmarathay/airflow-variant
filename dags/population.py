@@ -14,8 +14,8 @@ default_args = {
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
-    # 'queue': 'bash_queue',
-    # 'pool': 'backfill',
+    'queue': 'bash_queue',
+    'pool': 'backfill',
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
@@ -32,24 +32,25 @@ dag = DAG("population", default_args=default_args)
 
 t1 = BashOperator(
     task_id="run_manager",
-    bash_command="python3 /srv/etl/pipeline-variant/population/manager_lambda/population_manager.py staging ",
-    retries=1, 
+    #bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging ",
+    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_manager.py staging",
     dag=dag
     )
 
 t2 = BashOperator(
     task_id="run_population_companies",
-    bash_operator="python3 /srv/etl/pipeline-variant/population/companies_lambda/population_companies.py staging",
-    retries=1,
+    #bash_command="python3 /srv/etl/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
+    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
-    bash_operator="python3 /srv/etl/pipeline-variant/population/commands_lambda/population_commands.py staging",
-    retries=1,
+    #bash_command="python3 /srv/etl/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
+    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
     dag=dag
     )
 
-t1.set_upstream(t2).set_upstream(t3)
+t1.set_downstream(t2)
+t2.set_downstream(t3)
 
