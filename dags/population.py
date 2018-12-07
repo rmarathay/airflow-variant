@@ -1,7 +1,3 @@
-"""
-Code that goes along with the Airflow located at:
-http://airflow.readthedocs.org/en/latest/tutorial.html
-"""
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
@@ -10,17 +6,18 @@ from datetime import datetime, timedelta
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": datetime(2018, 11, 24),
+    "start_date": datetime(2018, 12, 7),
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
-    'queue': 'bash_queue',
-    'pool': 'backfill', 
+    "schedule_interval" : "@hourly"
+    # 'queue': 'bash_queue',
+    # 'pool': 'backfill', 
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("population", default_args=default_args, schedule_interval='@hourly')
+dag = DAG("population", default_args=default_args)
 
 
 # Task1: Wait for file to appear in S3 bucket (SensorOperator)
