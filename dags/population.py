@@ -28,28 +28,30 @@ dag = DAG("population",
 # Task3: population_companies.py              (LambdaOperator)
 # Task4: population_commands.py               (LambdaOperator)
 
+t0 = BashOperator(
+    task_id="list",
+    bash_command="ls",
+    dag=dag
+    )
 
 t1 = BashOperator(
     task_id="run_manager",
-    bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging ",
-    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_manager.py staging",
+    bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging",
     dag=dag
     )
 
 t2 = BashOperator(
     task_id="run_population_companies",
     bash_command="python3 /srv/etl/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
-    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
     bash_command="python3 /srv/etl/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
-    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
     dag=dag
     )
-
+t0.set_downstream(t1)
 t1.set_downstream(t2)
 t2.set_downstream(t3)
 
