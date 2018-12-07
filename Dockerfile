@@ -80,7 +80,6 @@ RUN set -ex \
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
-COPY /srv/etl/pipeline-variant ${DOCKER_HOME}/pipeline-variant
 
 RUN chown -R airflow: ${AIRFLOW_HOME}
 
