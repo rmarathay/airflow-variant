@@ -105,6 +105,5 @@ You can also use this to run a bash shell or any other command in the same envir
     docker run --rm -ti puckel/docker-airflow bash
     docker run --rm -ti puckel/docker-airflow ipython
 
-# Wanna help?
-
-Fork, improve and PR. ;-)
+# Bash into container
+docker exec -it <container_id> /bin/bash

@@ -36,19 +36,19 @@ t0 = BashOperator(
 
 t1 = BashOperator(
     task_id="run_manager",
-    bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging",
+    bash_command="python /usr/local/pipeline-variant/population/population_manager.py staging",
     dag=dag
     )
 
 t2 = BashOperator(
     task_id="run_population_companies",
-    bash_command="python3 /srv/etl/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
+    bash_command="python /usr/local/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
-    bash_command="python3 /srv/etl/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
+    bash_command="python /usr/local/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
     dag=dag
     )
 t0.set_downstream(t1)
