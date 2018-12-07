@@ -16,7 +16,7 @@ default_args = {
     "email_on_retry": False,
     'queue': 'bash_queue',
     'pool': 'backfill',
-    'schedule_interval' : None,
+    'schedule_interval' : '@hourly',
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
