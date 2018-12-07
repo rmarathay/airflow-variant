@@ -10,14 +10,16 @@ default_args = {
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
-    "schedule_interval" : "@hourly"
     # 'queue': 'bash_queue',
     # 'pool': 'backfill', 
     # 'priority_weight': 10,
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("population", default_args=default_args)
+dag = DAG("population",
+        default_args=default_args,
+        schedule_interval="@hourly"
+    )
 
 
 # Task1: Wait for file to appear in S3 bucket (SensorOperator)
