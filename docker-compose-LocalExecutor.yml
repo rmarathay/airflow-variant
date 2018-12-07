@@ -17,6 +17,7 @@ services:
             - EXECUTOR=Local
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./pipeline-variant:/usr/local/pipeline-variant
             # Uncomment to include custom plugins
         ports:
             - "8080:8080"
