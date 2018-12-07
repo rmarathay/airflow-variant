@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 
 default_args = {
-    "owner": "cdp_admin",
+    "owner": "airflow",
     "depends_on_past": False,
     "start_date": datetime(2018, 11, 24),
     "email": ["airflow@airflow.com"],
@@ -32,22 +32,22 @@ dag = DAG("population", default_args=default_args, schedule_interval='@hourly')
 
 t1 = BashOperator(
     task_id="run_manager",
-    #bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging ",
-    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_manager.py staging",
+    bash_command="python3 /srv/etl/pipeline-variant/population/population_manager.py staging ",
+    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_manager.py staging",
     dag=dag
     )
 
 t2 = BashOperator(
     task_id="run_population_companies",
-    #bash_command="python3 /srv/etl/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
-    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
+    bash_command="python3 /srv/etl/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
+    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_companies.py company_info_input.tsv staging",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
-    #bash_command="python3 /srv/etl/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
-    bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
+    bash_command="python3 /srv/etl/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
+    #bash_command="python3 /Users/rmarathay/code/variant/pipeline-variant/population/population_commands.py top_level_domain_input.tsv staging",
     dag=dag
     )
 
