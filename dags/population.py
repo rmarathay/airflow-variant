@@ -43,6 +43,7 @@ dag = DAG("population",
 t2 = BashOperator(
     task_id="run_manager",
     bash_command="python3 /usr/local/pipeline-variant/population/population_manager.py staging",
+    run_as_user="root",
     dag=dag
     )
 
