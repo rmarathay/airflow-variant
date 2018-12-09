@@ -28,17 +28,17 @@ dag = DAG("population",
 # Task3: population_companies.py              (LambdaOperator)
 # Task4: population_commands.py               (LambdaOperator)
 
-t0 = BashOperator(
+t1 = BashOperator(
     task_id="change_permissions1",
-    bash_command="chmod 777 /usr/local/pipeline-variant/population/company_info_input.tsv",
+    bash_command="chmod -R a+x /usr/local/pipeline-variant/",
     dag=dag
     )
 
-t1 = BashOperator(
-    task_id="change_permissions2",
-    bash_command="chmod 777 /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
-    dag=dag
-    )
+# t1 = BashOperator(
+#     task_id="change_permissions2",
+#     bash_command="chmod 777 /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
+#     dag=dag
+#     )
 
 t2 = BashOperator(
     task_id="run_manager",
@@ -57,7 +57,7 @@ t4 = BashOperator(
     bash_command="python3 /usr/local/pipeline-variant/population/population_commands.py /usr/local/pipeline-variant/population/top_level_domain_input.tsv staging",
     dag=dag
     )
-t0.set_downstream(t1)
+# t0.set_downstream(t1)
 t1.set_downstream(t2)
 t2.set_downstream(t3)
 t3.set_downstream(t4)
