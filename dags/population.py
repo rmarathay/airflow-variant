@@ -30,7 +30,7 @@ dag = DAG("population",
 
 t0 = BashOperator(
     task_id="change_permissions",
-    bash_command="chmod 777 -R /usr/local/pipeline-variant/",
+    bash_command="sudo chmod 777 -R /usr/local/pipeline-variant/",
     dag=dag
     )
 
