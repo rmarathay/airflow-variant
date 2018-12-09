@@ -59,6 +59,9 @@ RUN set -ex \
     && locale-gen \
     && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
     && useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
+    && apt-get install sudo
+    && sudo adduser airflow sudo
+    && chmod 777 -R /usr/local/pipeline-variant
     && pip install -U pip setuptools wheel \
     && pip install pytz \
     && pip install pyOpenSSL \
