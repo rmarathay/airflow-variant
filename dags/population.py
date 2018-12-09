@@ -50,12 +50,14 @@ t2 = BashOperator(
 t3 = BashOperator(
     task_id="run_population_companies",
     bash_command="python3 /usr/local/pipeline-variant/population/population_companies.py /usr/local/pipeline-variant/population/company_info_input.tsv staging",
+    run_as_user="airflow",
     dag=dag
     )
 
 t4 = BashOperator(
     task_id="run_population_commands",
     bash_command="python3 /usr/local/pipeline-variant/population/population_commands.py /usr/local/pipeline-variant/population/top_level_domain_input.tsv staging",
+    run_as_user="airflow",
     dag=dag
     )
 # t0.set_downstream(t1)
