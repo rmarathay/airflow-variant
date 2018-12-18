@@ -8,7 +8,7 @@ default_args = {
     "owner": "airflow",
     "depends_on_past": False,
     "start_date": datetime(2018, 12, 17),
-    "email": ["airflow@airflow.com"],
+    "email": ["rmarathay@gmail.com"],
     "email_on_failure": False,
     "email_on_retry": False,
 }
@@ -17,10 +17,25 @@ dag = DAG("scan",
         default_args=default_args,
         schedule_interval="@daily"
     )
-
-t1 = BashOperator(
-    task_id="run_manager",
-    bash_command="python3 /usr/local/pipeline-variant/scan/fetch_subdomains.py staging",
+t0 = BashOperator(
+    task_id="root_node",
+    bash_command="ls",
     run_as_user="airflow",
     dag=dag
     )
+
+default_params = {'node' : 0}
+
+for node_id in range(1,51):
+    params = default_params
+    params['node'] = node_id
+    t1 = BashOperator(
+        task_id="fetch_subdomains_node_" + str(node_id),
+        bash_command="python3 /usr/local/pipeline-variant/scan/fetch_subdomains.py {{ params.node }}",
+        run_as_user="airflow",
+        params = params,
+        dag=dag
+        )
+    t1.set_upstream(t0)
+
+
