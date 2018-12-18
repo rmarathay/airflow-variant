@@ -13,7 +13,7 @@ default_args = {
     "email_on_retry": False,
 }
 
-dag = DAG("population",
+dag = DAG("scan",
         default_args=default_args,
         schedule_interval="@daily"
     )
