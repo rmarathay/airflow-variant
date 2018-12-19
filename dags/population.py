@@ -47,7 +47,7 @@ t3 = BashOperator(
 
 t4 = BashOperator(
     task_id="remove_old_tsv",
-    bash_command="sudo rm -f /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
+    bash_command="rm -f /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
     run_as_user="airflow",
     dag=dag
     )
