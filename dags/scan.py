@@ -15,7 +15,7 @@ default_args = {
 
 dag = DAG("scan",
         default_args=default_args,
-        schedule_interval="@daily"
+        schedule_interval="@monthly"
     )
 t0 = BashOperator(
     task_id="root_node",
