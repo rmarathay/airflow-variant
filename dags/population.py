@@ -33,14 +33,21 @@ t1 = BashOperator(
 
 t2 = BashOperator(
     task_id="run_population_companies",
-    bash_command="python3 /usr/local/pipeline-variant/population/population_companies.py /usr/local/pipeline-variant/population/company_info_input.tsv staging",
+    bash_command="python3 /usr/local/pipeline-variant/population/population_companies.py staging",
     run_as_user="airflow",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
-    bash_command="python3 /usr/local/pipeline-variant/population/population_commands.py /usr/local/pipeline-variant/population/top_level_domain_input.tsv staging",
+    bash_command="python3 /usr/local/pipeline-variant/population/population_commands.py staging",
+    run_as_user="airflow",
+    dag=dag
+    )
+
+t4 = BashOperator(
+    task_id="remove_old_tsv",
+    bash_command="sudo rm -f /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
     run_as_user="airflow",
     dag=dag
     )
@@ -48,4 +55,5 @@ t3 = BashOperator(
 
 t1.set_downstream(t2)
 t2.set_downstream(t3)
+t3.set_downstream(t4)
 
