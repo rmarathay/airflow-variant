@@ -23,6 +23,12 @@ t0 = BashOperator(
     run_as_user="airflow",
     dag=dag
     )
+t2 = BashOperator(
+    task_id="populate_subdomains",
+    bash_command="python3 /usr/local/pipeline-variant/scan/populate_subdomains.py",
+    run_as_user="airflow",
+    dag=dag
+)
 
 default_params = {'node' : 0}
 
@@ -37,5 +43,6 @@ for node_id in range(1,17):
         dag=dag
         )
     t1.set_upstream(t0)
+    t2.set_upstream(t1)
 
 
