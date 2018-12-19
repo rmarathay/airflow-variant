@@ -26,7 +26,7 @@ t0 = BashOperator(
 
 default_params = {'node' : 0}
 
-for node_id in range(1,51):
+for node_id in range(1,17):
     params = default_params
     params['node'] = node_id
     t1 = BashOperator(
