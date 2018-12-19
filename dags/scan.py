@@ -31,7 +31,7 @@ t2 = BashOperator(
 )
 
 default_params = {'node' : 0}
-
+node_list = []
 for node_id in range(1,17):
     params = default_params
     params['node'] = node_id
@@ -42,7 +42,11 @@ for node_id in range(1,17):
         params = params,
         dag=dag
         )
-    t1.set_upstream(t0)
-    t2.set_upstream(t1)
-
+    if(len(node_list) == 0):
+        t1.set_upstream(t0)
+    else:
+        t1.set_upstream(node_list[-1])
+    node_list.append(t1)
+t2.set_upstream(node_list[-1])
+    
 
