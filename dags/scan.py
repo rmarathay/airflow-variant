@@ -31,7 +31,7 @@ for node_id in range(1,51):
     params['node'] = node_id
     t1 = BashOperator(
         task_id="fetch_subdomains_node_" + str(node_id),
-        bash_command="python3 /usr/local/pipeline-variant/scan/fetch_subdomains.py {{ params.node }}",
+        bash_command="python3 /usr/local/pipeline-variant/scan/fetch_subdomains.py {{ params.node }} ",
         run_as_user="airflow",
         params = params,
         dag=dag
