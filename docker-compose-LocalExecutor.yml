@@ -21,7 +21,7 @@ services:
             # Uncomment to include custom plugins
         ports:
             - "8080:8080"
-        command: bash -c "apt-get install nmap && webserver"
+        command: webserver
         healthcheck:
             test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
             interval: 30s
