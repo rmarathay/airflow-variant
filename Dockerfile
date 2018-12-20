@@ -59,9 +59,9 @@ RUN set -ex \
     && locale-gen \
     && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
     && useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
-    && apt-get install sudo
-    && sudo adduser airflow sudo
-    && chmod 777 -R /usr/local/pipeline-variant
+    && apt-get install sudo \
+    && sudo adduser airflow sudo \
+    && chmod 777 -R /usr/local/pipeline-variant \
     && pip install -U pip setuptools wheel \
     && pip install pytz \
     && pip install pyOpenSSL \
@@ -71,7 +71,7 @@ RUN set -ex \
     && apt-get install -y apt-utils \
     && apt-get install -y nmap \
     && pip install -U pip \
-    && pip install -r pipeline-variant/requirements.txt
+    && pip install -r pipeline-variant/requirements.txt \
     && pip install apache-airflow[crypto,celery,postgres,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'celery[redis]>=4.1.1,<4.2.0' \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
