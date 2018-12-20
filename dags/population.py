@@ -12,7 +12,7 @@ default_args = {
     "email_on_retry": False,
 }
 
-dag = DAG("population",
+dag = DAG("populate",
         default_args=default_args,
         schedule_interval=None
     )
@@ -26,28 +26,28 @@ dag = DAG("population",
 
 t1 = BashOperator(
     task_id="run_manager",
-    bash_command="python3 /usr/local/pipeline-variant/population/population_manager.py staging",
+    bash_command="python3 /usr/local/pipeline-variant/populate/population_manager.py staging",
     run_as_user="airflow",
     dag=dag
     )
 
 t2 = BashOperator(
     task_id="run_population_companies",
-    bash_command="python3 /usr/local/pipeline-variant/population/population_companies.py staging",
+    bash_command="python3 /usr/local/pipeline-variant/populate/population_companies.py staging",
     run_as_user="airflow",
     dag=dag
     )
 
 t3 = BashOperator(
     task_id="run_population_commands",
-    bash_command="python3 /usr/local/pipeline-variant/population/population_commands.py staging",
+    bash_command="python3 /usr/local/pipeline-variant/populate/population_commands.py staging",
     run_as_user="airflow",
     dag=dag
     )
 
 t4 = BashOperator(
     task_id="remove_old_tsv",
-    bash_command="rm -f /usr/local/pipeline-variant/population/top_level_domain_input.tsv",
+    bash_command="rm -f /usr/local/pipeline-variant/populate/top_level_domain_input.tsv",
     run_as_user="airflow",
     dag=dag
     )

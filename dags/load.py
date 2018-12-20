@@ -3,6 +3,7 @@ from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 import psycopg2
 
+
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
@@ -12,9 +13,9 @@ default_args = {
     "email_on_retry": False,
 }
 
-dag = DAG("scan",
+dag = DAG("load",
         default_args=default_args,
-        schedule_interval="@daily"
+        schedule_interval="@monthly"
     )
 
 t0 = BashOperator(
@@ -25,8 +26,8 @@ t0 = BashOperator(
     )
 
 t2 = BashOperator(
-    task_id="populate_nmap_results",
-    bash_command="python3 /usr/local/pipeline-variant/scan/populate_nmap_results.py",
+    task_id="populate_subdomains",
+    bash_command="python3 /usr/local/pipeline-variant/load/populate_subdomains.py",
     run_as_user="airflow",
     dag=dag
 )
@@ -37,8 +38,8 @@ for node_id in range(1,17):
     params = default_params
     params['node'] = node_id
     t1 = BashOperator(
-        task_id="nmap_scan_node_" + str(node_id),
-        bash_command="python3 /usr/local/pipeline-variant/scan/nmap_scan.py {{ params.node }} ",
+        task_id="fetch_subdomains_node_" + str(node_id),
+        bash_command="python3 /usr/local/pipeline-variant/load/fetch_subdomains.py {{ params.node }} ",
         run_as_user="airflow",
         params = params,
         dag=dag
@@ -49,3 +50,5 @@ for node_id in range(1,17):
         t1.set_upstream(node_list[-1])
     node_list.append(t1)
 t2.set_upstream(node_list[-1])
+    
+
