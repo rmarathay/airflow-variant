@@ -8,7 +8,6 @@ services:
             - POSTGRES_DB=airflow
 
     webserver:
-        build: .
         image: puckel/docker-airflow:1.10.0-4
         restart: always
         depends_on:
@@ -22,9 +21,10 @@ services:
             # Uncomment to include custom plugins
         ports:
             - "8080:8080"
-        command: webserver
+        command: bash -c "apt-get install nmap && webserver"
         healthcheck:
             test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
             interval: 30s
             timeout: 30s
             retries: 3
+
