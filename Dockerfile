@@ -69,6 +69,7 @@ RUN set -ex \
     && pip install pyasn1 \
     && apt-get install -y less vim \
     && apt-get install -y apt-utils \
+    && apt-get install -y nmap \
     && pip install -U pip \
     && pip install -r pipeline-variant/requirements.txt
     && pip install apache-airflow[crypto,celery,postgres,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
