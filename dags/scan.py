@@ -6,7 +6,7 @@ import psycopg2
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": datetime(2018, 12, 17),
+    "start_date": datetime(2018, 12, 24),
     "email": ["rmarathay@gmail.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -38,7 +38,7 @@ for node_id in range(1,17):
     params['node'] = node_id
     t1 = BashOperator(
         task_id="nmap_scan_node_" + str(node_id),
-        bash_command="python3 /usr/local/pipeline-variant/scan/nmap_scan.py {{ params.node }} ",
+        bash_command="python3 /usr/local/pipeline-variant/scan/nmap_scan.py {{ params.node }} 1 ",
         run_as_user="airflow",
         params = params,
         dag=dag
